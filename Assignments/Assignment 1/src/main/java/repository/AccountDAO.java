@@ -1,6 +1,7 @@
 package repository;
 
 
+import database.DatabaseConnection;
 import model.Account;
 import model.AccountType;
 

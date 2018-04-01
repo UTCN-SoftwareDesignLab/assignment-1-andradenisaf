@@ -1,5 +1,6 @@
 package repository;
 
+import database.DatabaseConnection;
 import model.UtilityBill;
 import model.UtilityBillType;
 

@@ -1,5 +1,6 @@
 package repository;
 
+import database.DatabaseConnection;
 import model.Client;
 
 import java.sql.Connection;

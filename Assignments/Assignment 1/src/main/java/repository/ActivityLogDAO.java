@@ -1,5 +1,6 @@
 package repository;
 
+import database.DatabaseConnection;
 import model.ActivityLog;
 
 import java.sql.Connection;
