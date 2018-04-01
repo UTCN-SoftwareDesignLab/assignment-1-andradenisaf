@@ -1,7 +1,6 @@
 package business_layer;
 
 
-
 import data_access_layer.*;
 import exceptions.*;
 import model.*;
@@ -18,15 +17,16 @@ public class EmployeeService extends GeneralService implements IEmployeeService 
     private IActivityLogDAO activityLogDao;
     private IUtilityBillDAO utilityBillDao;
 
-    public EmployeeService() {
-        this.clientDao = new ClientDAO();
-        this.accountDao = new AccountDAO();
-        this.activityLogDao = new ActivityLogDAO();
-        this.utilityBillDao = new UtilityBillDAO();
+    public EmployeeService(IUserDAO userDao, IClientDAO clientDao, IAccountDAO accountDao, IActivityLogDAO activityLogDao, IUtilityBillDAO utilityBillDao) {
+        super(userDao);
+        this.clientDao = clientDao;
+        this.accountDao = accountDao;
+        this.activityLogDao = activityLogDao;
+        this.utilityBillDao = utilityBillDao;
     }
 
     private void saveActivityLog(String employeeUsername, String description, IModel obj) {
-        User emp = userDAO.getUserByUsername(employeeUsername);
+        User emp = userDao.getUserByUsername(employeeUsername);
         LocalDateTime time = LocalDateTime.now();
         activityLogDao.save(new ActivityLog(emp.getId(), time + ": " + description + " " + obj));
     }
@@ -51,8 +51,8 @@ public class EmployeeService extends GeneralService implements IEmployeeService 
             throw new DuplicateClientException("Client already exists");
 
         boolean saved = clientDao.save(client);
-        Client savedClient =  null;
-        if(saved)
+        Client savedClient = null;
+        if (saved)
             savedClient = clientDao.getClientByCNP(client.getCNP());
 
         if (savedClient != null) {
@@ -110,7 +110,7 @@ public class EmployeeService extends GeneralService implements IEmployeeService 
 
         boolean saved = accountDao.save(account);
         Account savedAccount = null;
-        if(saved)
+        if (saved)
             savedAccount = accountDao.getAccountById(account.getId());
 
         if (savedAccount != null) {
@@ -225,8 +225,7 @@ public class EmployeeService extends GeneralService implements IEmployeeService 
 
         boolean saved = utilityBillDao.save(ub);
         UtilityBill addedBill = null;
-        if(saved)
-        {
+        if (saved) {
             addedBill = utilityBillDao.getUtilityBillById(ub.getId());
         }
 

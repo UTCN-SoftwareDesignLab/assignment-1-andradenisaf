@@ -1,7 +1,6 @@
 package business_layer;
 
 import data_access_layer.IUserDAO;
-import data_access_layer.UserDAO;
 import exceptions.InexistentAccountException;
 import exceptions.InvalidPasswordException;
 import exceptions.UsernameAlreadyExistsException;
@@ -11,23 +10,23 @@ import java.util.List;
 
 public class GeneralService implements IGeneralService {
 
-    protected IUserDAO userDAO;
+    protected IUserDAO userDao;
 
-    public GeneralService() {
-        this.userDAO = new UserDAO();
+    public GeneralService(IUserDAO userDAO) {
+        this.userDao = userDAO;
     }
 
     public User signUp(User user)
             throws UsernameAlreadyExistsException {
 
-        User duplicateUser = userDAO.getUserByUsername(user.getUsername());
+        User duplicateUser = userDao.getUserByUsername(user.getUsername());
 
         if (duplicateUser != null)
             throw new UsernameAlreadyExistsException("Username already exists");
 
-        boolean saved = userDAO.save(user);
+        boolean saved = userDao.save(user);
         if (saved) {
-            return userDAO.getUserByUsername(user.getUsername());
+            return userDao.getUserByUsername(user.getUsername());
         }
         return null;
     }
@@ -35,7 +34,7 @@ public class GeneralService implements IGeneralService {
 
     public User logIn(String username, String password) throws InvalidPasswordException, InexistentAccountException {
 
-        User user = userDAO.getUserByUsername(username);
+        User user = userDao.getUserByUsername(username);
         if (user == null) {
             throw new InexistentAccountException("Invalid username");
         }
@@ -50,14 +49,14 @@ public class GeneralService implements IGeneralService {
     public User changePassword(String username, String oldPassword, String newPassword)
             throws InvalidPasswordException, InexistentAccountException {
 
-        User user = userDAO.getUserByUsername(username);
+        User user = userDao.getUserByUsername(username);
         if (user == null) {
             throw new InexistentAccountException("Invalid username");
         }
 
         if (user.getPassword().equals(oldPassword)) {
             user.setPassword(newPassword);
-            boolean updated = userDAO.update(user);
+            boolean updated = userDao.update(user);
         } else {
             throw new InvalidPasswordException("Invalid old password");
         }
@@ -66,11 +65,11 @@ public class GeneralService implements IGeneralService {
 
     public User getUserByUsername(String username) {
 
-        return userDAO.getUserByUsername(username);
+        return userDao.getUserByUsername(username);
     }
 
     public List<User> getUsers() {
-        return userDAO.getUsers();
+        return userDao.getUsers();
     }
 
 }

@@ -1,9 +1,7 @@
 package business_layer;
 
-import data_access_layer.ActivityLogDAO;
 import data_access_layer.IActivityLogDAO;
 import data_access_layer.IUserDAO;
-import data_access_layer.UserDAO;
 import exceptions.InexistentUserException;
 import exceptions.UsernameAlreadyExistsException;
 import model.ActivityLog;
@@ -15,18 +13,17 @@ import java.util.List;
 public class AdministratorService extends GeneralService implements IAdministratorService {
 
     IActivityLogDAO activityLogDAO = null;
-    IUserDAO userDAO = null;
 
-    public AdministratorService() {
-        activityLogDAO = new ActivityLogDAO();
-        userDAO = new UserDAO();
+    public AdministratorService(IActivityLogDAO activityLogDao, IUserDAO userDao) {
+        super(userDao);
+        this.activityLogDAO = activityLogDao;
     }
 
     @Override
     public List<ActivityLog> getActivityLogForEmployee(String employeeUsername) throws InexistentUserException
 
     {
-        User employee = userDAO.getUserByUsername(employeeUsername);
+        User employee = userDao.getUserByUsername(employeeUsername);
 
         if (employee == null)
             throw new InexistentUserException("Inexistent user");
@@ -50,20 +47,20 @@ public class AdministratorService extends GeneralService implements IAdministrat
     @Override
     public User updateEmployee(User user) throws InexistentUserException {
 
-        User dbUser = userDAO.getUserByUsername(user.getUsername());
+        User dbUser = userDao.getUserByUsername(user.getUsername());
         if (dbUser == null)
             throw new InexistentUserException("Inexistent user");
         user.setId(dbUser.getId());
-        userDAO.update(user);
+        userDao.update(user);
         return user;
     }
 
     @Override
     public boolean deleteEmployee(String username) throws InexistentUserException {
-        User dbUser = userDAO.getUserByUsername(username);
+        User dbUser = userDao.getUserByUsername(username);
         if (dbUser == null)
             throw new InexistentUserException("Inexistent user");
-        return userDAO.delete(dbUser.getUsername());
+        return userDao.delete(dbUser.getUsername());
     }
 
 
