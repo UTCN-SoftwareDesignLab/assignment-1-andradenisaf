@@ -1,4 +1,4 @@
-package data_access_layer;
+package repository;
 
 import model.User;
 import model.UserRole;
@@ -48,7 +48,6 @@ public class UserDAO implements IUserDAO {
         //query the database using parameters (?)
         try {
             PreparedStatement preStmt = connection.prepareStatement("insert into users values (id,?,?,?,?,?,?)");
-            System.out.println("uaerDAO - PREP STATEMENTS" + preStmt);
 
             //set the statement's parameters
             preStmt.setString(1, user.getFullname());

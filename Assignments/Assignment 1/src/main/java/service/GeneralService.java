@@ -1,6 +1,7 @@
-package business_layer;
+package service;
 
-import data_access_layer.IUserDAO;
+import exceptions.InexistentUserException;
+import repository.IUserDAO;
 import exceptions.InexistentAccountException;
 import exceptions.InvalidPasswordException;
 import exceptions.UsernameAlreadyExistsException;
@@ -32,11 +33,11 @@ public class GeneralService implements IGeneralService {
     }
 
 
-    public User logIn(String username, String password) throws InvalidPasswordException, InexistentAccountException {
+    public User logIn(String username, String password) throws InvalidPasswordException, InexistentUserException {
 
         User user = userDao.getUserByUsername(username);
         if (user == null) {
-            throw new InexistentAccountException("Invalid username");
+            throw new InexistentUserException("Invalid username");
         }
 
         if (user.getPassword().equals(password)) {

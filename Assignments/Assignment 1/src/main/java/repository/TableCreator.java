@@ -1,4 +1,4 @@
-package data_access_layer;
+package repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,6 +1,7 @@
-package business_layer;
+package service;
 
 import exceptions.InexistentAccountException;
+import exceptions.InexistentUserException;
 import exceptions.InvalidPasswordException;
 import exceptions.UsernameAlreadyExistsException;
 import model.User;
@@ -12,7 +13,7 @@ public interface IGeneralService {
     public User signUp(User user)
             throws UsernameAlreadyExistsException;
 
-    public User logIn(String username, String password) throws InvalidPasswordException, InexistentAccountException;
+    public User logIn(String username, String password) throws InvalidPasswordException, InexistentUserException;
 
     public User changePassword(String username, String oldPassword, String newPassword)
             throws InvalidPasswordException, InexistentAccountException;

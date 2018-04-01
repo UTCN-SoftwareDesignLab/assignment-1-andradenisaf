@@ -1,7 +1,7 @@
-package business_layer;
+package service;
 
-import data_access_layer.IActivityLogDAO;
-import data_access_layer.IUserDAO;
+import repository.IActivityLogDAO;
+import repository.IUserDAO;
 import exceptions.InexistentUserException;
 import exceptions.UsernameAlreadyExistsException;
 import model.ActivityLog;

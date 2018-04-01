@@ -1,10 +1,10 @@
-package presentation_layer;
+package controller;
 
 
-import business_layer.GeneralService;
-import business_layer.IGeneralService;
-import data_access_layer.IUserDAO;
-import data_access_layer.UserDAO;
+import service.GeneralService;
+import service.IGeneralService;
+import repository.IUserDAO;
+import repository.UserDAO;
 import exceptions.UsernameAlreadyExistsException;
 import model.User;
 import model.UserRole;
