@@ -1,5 +1,6 @@
 package service;
 
+import model.UserRole;
 import repository.IActivityLogDAO;
 import repository.IUserDAO;
 import exceptions.InexistentUserException;
@@ -7,6 +8,10 @@ import exceptions.UsernameAlreadyExistsException;
 import model.ActivityLog;
 import model.User;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +25,7 @@ public class AdministratorService extends GeneralService implements IAdministrat
     }
 
     @Override
-    public List<ActivityLog> getActivityLogForEmployee(String employeeUsername) throws InexistentUserException
+    public List<ActivityLog> generateActivityLogForEmployee(String employeeUsername) throws InexistentUserException
 
     {
         User employee = userDao.getUserByUsername(employeeUsername);
@@ -36,7 +41,46 @@ public class AdministratorService extends GeneralService implements IAdministrat
                 searchedLogs.add(activityLog);
             }
         }
+
+
+        String fileName = String.format("ActivityLogs/employee%s.txt",employee.getUsername().toUpperCase());
+
+        //create the file if it does not exist
+        File activityReportFile = new File(fileName);
+        try {
+            activityReportFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //print details to file
+        try(  PrintWriter out = new PrintWriter( fileName )  ){
+            out.println("Employee id:" + employee.getId());
+            out.println("Employee username: " + employee.getUsername().toUpperCase());
+            out.println("\nActivity Log:");
+            for(ActivityLog log: searchedLogs)
+            {
+                out.println("\t"+ log.getDescription());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return searchedLogs;
+    }
+
+    @Override
+    public List<User> getEmployees()
+    {
+        List<User> users = userDao.getUsers();
+        List<User> employees = new ArrayList<>();
+
+        for(User user: users){
+            if(user.getRole().equals(UserRole.EMPLOYEE))
+                employees.add(user);
+        }
+
+        return employees;
     }
 
     @Override

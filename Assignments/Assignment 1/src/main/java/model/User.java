@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Observer;
 
 public class User implements IModel, Serializable {
 

@@ -48,11 +48,11 @@ public class GeneralService implements IGeneralService {
     }
 
     public User changePassword(String username, String oldPassword, String newPassword)
-            throws InvalidPasswordException, InexistentAccountException {
+            throws InvalidPasswordException, InexistentUserException {
 
         User user = userDao.getUserByUsername(username);
         if (user == null) {
-            throw new InexistentAccountException("Invalid username");
+            throw new InexistentUserException("Invalid username");
         }
 
         if (user.getPassword().equals(oldPassword)) {

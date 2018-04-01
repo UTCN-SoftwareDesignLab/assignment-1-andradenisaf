@@ -16,11 +16,11 @@ public interface IGeneralService {
     public User logIn(String username, String password) throws InvalidPasswordException, InexistentUserException;
 
     public User changePassword(String username, String oldPassword, String newPassword)
-            throws InvalidPasswordException, InexistentAccountException;
+            throws InvalidPasswordException, InexistentUserException;
 
     public List<User> getUsers();
 
-    public User getUserByUsername(String username) throws InexistentAccountException;
+    public User getUserByUsername(String username) throws InexistentUserException;
 
 }
 

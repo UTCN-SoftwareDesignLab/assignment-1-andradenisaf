@@ -13,7 +13,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/authenticationView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/logInView.fxml"));
 
         ComponentFactory componentFactory = ComponentFactory.instance();
         IGeneralService generalService = componentFactory.getGeneralService();

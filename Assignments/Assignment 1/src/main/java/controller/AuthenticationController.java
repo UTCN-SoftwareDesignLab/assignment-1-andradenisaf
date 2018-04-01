@@ -10,37 +10,45 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 import model.UserRole;
+import service.IAdministratorService;
 import service.IGeneralService;
 import javafx.fxml.FXML;
-import javafx.scene.layout.Pane;
 
 
-public class AuthenticationController {
+public class AuthenticationController extends AlertController {
 
 
-    @FXML private TextField usernameTextField;
+    @FXML
+    private TextField usernameTextField;
 
-    @FXML private PasswordField passwordField;
+    @FXML
+    private PasswordField passwordField;
 
-    @FXML private TextField fullnameTextField;
+    @FXML
+    private TextField fullnameTextField;
 
-    @FXML private TextField username1TextField;
+    @FXML
+    private TextField username1TextField;
 
-    @FXML private PasswordField password1Field;
+    @FXML
+    private PasswordField password1Field;
 
-    @FXML private PasswordField confirmPasswordField;
+    @FXML
+    private PasswordField confirmPasswordField;
 
-    @FXML private TextArea addressTextArea;
+    @FXML
+    private TextArea addressTextArea;
 
-    @FXML private TextField emailTextField;
+    @FXML
+    private TextField emailTextField;
 
     private Stage signUpStage;
 
-    IGeneralService generalService;
+    private Stage administratorStage;
 
-    public AuthenticationController() {
-        initComponents();
-    }
+    private Stage employeeStage;
+
+    IGeneralService generalService;
 
     public AuthenticationController(IGeneralService generalService) {
 
@@ -59,6 +67,8 @@ public class AuthenticationController {
         addressTextArea = new TextArea();
         emailTextField = new TextField();
         signUpStage = new Stage();
+        administratorStage = new Stage();
+        employeeStage = new Stage();
 
     }
 
@@ -66,17 +76,21 @@ public class AuthenticationController {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
 
-        if (username.equals(""))
+        if (username.equals("")) {
             displayErrorBox("Username not provided", "Please enter a valid username");
+            return;
+        }
 
 
-        if (password.equals(""))
+        if (password.equals("")) {
             displayErrorBox("Password not provided", "Please enter your password");
+            return;
+        }
 
         try {
             User user = generalService.logIn(username, password);
             if (user.getRole() == UserRole.ADMINISTRATOR) {
-                //redirect to admin page
+                switchToAdministratorView(user.getUsername());
             } else {
                 //redirect to client page
             }
@@ -90,8 +104,7 @@ public class AuthenticationController {
 
     }
 
-    public void switchToSignUpView()
-    {
+    public void switchToSignUpView() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/signUpView.fxml"));
@@ -103,16 +116,13 @@ public class AuthenticationController {
             Parent root = loader.load();
             signUpStage.setScene(new Scene(root, 500, 500));
             signUpStage.show();
-        }
-        catch(java.io.IOException e)
-        {
+        } catch (java.io.IOException e) {
             e.printStackTrace();
             displayErrorBox("RIP", "Something went wrong while switching views");
         }
     }
 
-    public void signUp()
-    {
+    public void signUp() {
         String fullname = fullnameTextField.getText();
         String username = username1TextField.getText();
         String password = password1Field.getText();
@@ -120,55 +130,70 @@ public class AuthenticationController {
         String address = addressTextArea.getText();
         String email = emailTextField.getText();
 
-        if (fullname.equals(""))
+        if (fullname.equals("")) {
             displayErrorBox("Full name not provided", "Please enter a fullname");
+            return;
+        }
 
-        if (username.equals(""))
+        if (username.equals("")){
             displayErrorBox("Username not provided", "Please enter a username");
+            return;
+        }
 
-        if (password.equals(""))
+        if (password.equals("")){
             displayErrorBox("Password not provided", "Please enter a password");
+            return;
+        }
 
-        if (confirmPassword.equals(""))
+        if (confirmPassword.equals("")){
             displayErrorBox("Password not confirmed", "Please reenter the password");
+            return;
+        }
 
-        if(!password.equals(confirmPassword))
+        if (!password.equals(confirmPassword)){
             displayErrorBox("Password mismatch", "Passwords do not match");
+            return;
+        }
 
-        if (address.equals(""))
+        if (address.equals("")){
             displayErrorBox("Address not provided", "Please enter an address");
+            return;
+        }
 
-        if (email.equals(""))
+        if (email.equals("")){
             displayErrorBox("Email not provided", "Please enter an email address");
+            return;
+        }
 
-        try
-        {
-            User user = new User(fullname,username,password,email,address,UserRole.EMPLOYEE);
+        try {
+            User user = new User(fullname, username, password, email, address, UserRole.EMPLOYEE);
             User signedUpUser = generalService.signUp(user);
             signUpStage.close();
-        }
-        catch(UsernameAlreadyExistsException e)
-        {
+        } catch (UsernameAlreadyExistsException e) {
             displayErrorBox("Username already exists", "Please select a new username");
         }
 
     }
 
 
-    public void displayErrorBox(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
+    public void switchToAdministratorView(String username) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/adminMainView.fxml"));
 
-    public void displayInformationBox(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+            ComponentFactory componentFactory = ComponentFactory.instance();
+            IAdministratorService administratorService = componentFactory.getAdministratorService();
+            AdministratorController administratorController = new AdministratorController(username, administratorService);
+
+            loader.setController(administratorController);
+            administratorStage.setTitle("Administrator page");
+
+            Parent root = loader.load();
+            administratorStage.setScene(new Scene(root, 1200, 630));
+            administratorStage.show();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            displayErrorBox("RIP", "Something went wrong while switching views");
+        }
     }
 
 }
