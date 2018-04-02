@@ -14,5 +14,7 @@ public interface IClientDAO {
 
     public Client getClientByCNP(String CNP);
 
+    public Client getClientById(int id);
+
     public List<Client> getClients();
 }

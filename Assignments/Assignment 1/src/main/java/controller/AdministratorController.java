@@ -41,9 +41,6 @@ public class AdministratorController extends AlertController {
 
 
     @FXML
-    private TableView<ActivityLog> activityLogTableView;
-
-    @FXML
     private TextField fullnameTextField;
 
     @FXML
@@ -94,7 +91,6 @@ public class AdministratorController extends AlertController {
         email = new TableColumn<>();
         role = new TableColumn<>();
 
-        activityLogTableView = new TableView<>();
         fullnameTextField = new TextField();
         usernameTextField = new TextField();
         passwordTextField = new TextField();
@@ -145,10 +141,6 @@ public class AdministratorController extends AlertController {
         initEmployees();
     }
 
-    @FXML
-    public void getActivityLogs(int employeeId) {
-
-    }
 
 
     public void addEmployee() {

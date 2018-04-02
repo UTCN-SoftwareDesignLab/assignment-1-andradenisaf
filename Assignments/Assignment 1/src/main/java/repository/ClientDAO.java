@@ -79,7 +79,7 @@ public class ClientDAO implements IClientDAO {
     public boolean update(Client client) {
         try {
             PreparedStatement preStmt = connection.prepareStatement("UPDATE client SET " +
-                    "fullname=?, CNP=?,idCardNo=?,address=?,email=?" +
+                    "fullname=?, CNP=?,id_card_no=?,address=?,email=?" +
                     "WHERE id = ?");
             preStmt.setString(1, client.getFullname());
             preStmt.setString(2, client.getCNP());
@@ -101,8 +101,21 @@ public class ClientDAO implements IClientDAO {
     @Override
     public Client getClientByCNP(String CNP) {
         try {
-            PreparedStatement preStmt = connection.prepareStatement("select * from client where username=?");
+            PreparedStatement preStmt = connection.prepareStatement("select * from client where CNP=?");
             preStmt.setString(1, CNP);
+            return this.getClientFromStatementExecution(preStmt);
+        } catch (SQLException ex) {
+            System.out.println("Error DB " + ex);
+        }
+        return null;
+    }
+
+
+    @Override
+    public Client getClientById(int id) {
+        try {
+            PreparedStatement preStmt = connection.prepareStatement("select * from client where id=?");
+            preStmt.setInt(1, id);
             return this.getClientFromStatementExecution(preStmt);
         } catch (SQLException ex) {
             System.out.println("Error DB " + ex);

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="702.0" prefWidth="1098.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="4.0" layoutY="2.0" prefHeight="700.0" prefWidth="1100.0">
+         <children>
+            <TableView fx:id="clientsTableView" layoutX="305.0" layoutY="57.0" prefHeight="308.0" prefWidth="712.0">
+              <columns>
+                <TableColumn fx:id="clientId" prefWidth="34.69879150390625" text="Id" />
+                <TableColumn fx:id="fullname" prefWidth="115.30123901367188" text="Full Name" />
+                  <TableColumn fx:id="CNP" prefWidth="115.30123901367188" text="CNP" />
+                  <TableColumn fx:id="identityCardNo" prefWidth="161.04248046875" text="Identity Card Number " />
+                  <TableColumn fx:id="address" prefWidth="161.04248046875" text="Address" />
+                  <TableColumn fx:id="email" prefWidth="120.0" text="Email" />
+              </columns>
+            </TableView>
+            <TextField fx:id="fullnameTextField" layoutX="67.0" layoutY="59.0" promptText="Full Name" />
+            <TextField fx:id="cnpTextField" layoutX="67.0" layoutY="99.0" promptText="CNP" />
+            <TextField fx:id="identityCardNoTextField" layoutX="68.0" layoutY="140.0" promptText="Identity Card Number" />
+            <TextField fx:id="emailTextField" layoutX="69.0" layoutY="277.0" promptText="Email" />
+            <TextArea fx:id="addressTextArea" layoutX="68.0" layoutY="181.0" prefHeight="84.0" prefWidth="167.0" promptText="Address" />
+            <TableView fx:id="bankAccountsTableView" layoutX="304.0" layoutY="451.0" prefHeight="204.0" prefWidth="714.0">
+              <columns>
+                <TableColumn fx:id="accountId" prefWidth="75.83834838867188" text="Id" />
+                <TableColumn fx:id="clientId1" prefWidth="120.16171264648438" text="Client Id" />
+                  <TableColumn fx:id="accountType" prefWidth="160.42037963867188" text="Account Type" />
+                  <TableColumn fx:id="amount" prefWidth="164.3560791015625" text="Amount" />
+                  <TableColumn fx:id="creationDate" prefWidth="193.03387451171875" text="Creation Date" />
+              </columns>
+            </TableView>
+            <Label layoutX="307.0" layoutY="26.0" text="Clients' Information" />
+            <Label layoutX="307.0" layoutY="422.0" text="Client's accounts" />
+            <TextField fx:id="amountTextField" layoutX="69.0" layoutY="562.0" prefHeight="27.0" prefWidth="169.0" promptText="Amount" />
+            <ChoiceBox fx:id="accountTypeChoiceBox" layoutX="69.0" layoutY="525.0" prefHeight="27.0" prefWidth="167.0" />
+            <TextField fx:id="clientIdTextField" layoutX="69.0" layoutY="489.0" promptText="Client Id" />
+            <Button fx:id="addClientButton" layoutX="95.0" layoutY="320.0" mnemonicParsing="false" onAction="#addClient" text="Add" />
+            <Button fx:id="updateClientButton" layoutX="153.0" layoutY="320.0" mnemonicParsing="false" onAction="#updateClient" text="Update" />
+            <Button fx:id="addAccountButton" layoutX="63.0" layoutY="602.0" mnemonicParsing="false" onAction="#addAccount" text="Add" />
+            <Button fx:id="updateAccountButton" layoutX="113.0" layoutY="602.0" mnemonicParsing="false" onAction="#updateAccount" prefWidth="67.0" text="Update" />
+            <Button fx:id="deleteAccountButton" layoutX="187.0" layoutY="602.0" mnemonicParsing="false" onAction="#deleteAccount" text="Delete" />
+            <Button fx:id="transferMoneyButton" layoutX="743.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToTransferView" text="Transfer money" />
+            <Button fx:id="processUtilityBillsButton" layoutX="879.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToProcessBillView" text="Process utitlity bills" />
+            <TextField fx:id="accountIdTextField" layoutX="69.0" layoutY="453.0" promptText="Account Id" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -10,7 +10,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 import model.UserRole;
+import repository.UserDAO;
 import service.IAdministratorService;
+import service.IEmployeeService;
 import service.IGeneralService;
 import javafx.fxml.FXML;
 
@@ -72,6 +74,7 @@ public class AuthenticationController extends AlertController {
 
     }
 
+
     public void logIn() {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
@@ -92,7 +95,7 @@ public class AuthenticationController extends AlertController {
             if (user.getRole() == UserRole.ADMINISTRATOR) {
                 switchToAdministratorView(user.getUsername());
             } else {
-                //redirect to client page
+                switchToEmployeeView(user.getUsername());
             }
             displayInformationBox("SUCCESSFULL LOGIN", "You are logged in as " + user.getUsername());
         } catch (InexistentUserException e1) {
@@ -189,6 +192,26 @@ public class AuthenticationController extends AlertController {
 
             Parent root = loader.load();
             administratorStage.setScene(new Scene(root, 1200, 630));
+            administratorStage.show();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            displayErrorBox("RIP", "Something went wrong while switching views");
+        }
+    }
+
+    public void switchToEmployeeView(String username) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/employeeMainView.fxml"));
+
+            ComponentFactory componentFactory = ComponentFactory.instance();
+            IEmployeeService employeeService = componentFactory.getEmployeeService();
+            EmployeeController employeeController = new EmployeeController(username, employeeService);
+
+            loader.setController(employeeController);
+            administratorStage.setTitle("Employee page");
+
+            Parent root = loader.load();
+            administratorStage.setScene(new Scene(root, 1100, 730));
             administratorStage.show();
         } catch (java.io.IOException e) {
             e.printStackTrace();

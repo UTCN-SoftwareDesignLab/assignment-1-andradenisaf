@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="298.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane fx:id="transferMoneyPanel" layoutY="-2.0" prefHeight="300.0" prefWidth="300.0">
+         <children>
+            <TextField fx:id="senderIdTextField" layoutX="67.0" layoutY="69.0" promptText="Sender Id" />
+            <TextField fx:id="receiverIdTextField" layoutX="67.0" layoutY="122.0" promptText="Receiver Id" />
+            <TextField fx:id="amountTextField" layoutX="67.0" layoutY="175.0" promptText="Amount" />
+            <Button fx:id="transferButton" layoutX="113.0" layoutY="230.0" mnemonicParsing="false" onAction="#transferMoney" text="Transfer" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

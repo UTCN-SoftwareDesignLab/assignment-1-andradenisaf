@@ -12,7 +12,8 @@ public class Account implements IModel, Serializable {
     private float amount;
     private Date creationDate;
 
-    public Account(AccountType type, float amount, Date creationDate) {
+    public Account(int clientId, AccountType type, float amount, Date creationDate) {
+        this.clientId = clientId;
         this.type = type;
         this.amount = amount;
         this.creationDate = creationDate;
@@ -63,7 +64,8 @@ public class Account implements IModel, Serializable {
     @Override
     public String toString() {
         return "Account{" +
-                "type=" + type +
+                "clientId=" + clientId +
+                ", type=" + type +
                 ", amount=" + amount +
                 ", creationDate=" + creationDate +
                 '}';

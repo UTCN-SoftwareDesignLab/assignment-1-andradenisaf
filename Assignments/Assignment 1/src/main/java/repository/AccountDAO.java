@@ -30,9 +30,9 @@ public class AccountDAO implements IAccountDAO {
                     accountType = AccountType.SPENDING;
                 }
                 float amount = result.getFloat("amount");
-                Date creationDate = result.getDate("creationDate");
-
-                Account acc = new Account(accountType, amount, creationDate);
+                Date creationDate = result.getDate("creation_date");
+                int clientId = result.getInt("client_id");
+                Account acc = new Account(clientId, accountType, amount, creationDate);
                 acc.setId(id);
 
                 return acc;
@@ -48,11 +48,12 @@ public class AccountDAO implements IAccountDAO {
 
         //query the database using parameters (?)
         try {
-            PreparedStatement preStmt = connection.prepareStatement("insert into bank_account values (id,?,?,?)");
+            PreparedStatement preStmt = connection.prepareStatement("insert into bank_account values (id,?,?,?,?)");
             //set the statement's parameters
-            preStmt.setString(1, account.getType().toString());
-            preStmt.setFloat(2, account.getAmount());
-            preStmt.setDate(3, account.getCreationDate());
+            preStmt.setInt(1,account.getClientId());
+            preStmt.setString(2, account.getType().toString());
+            preStmt.setFloat(3, account.getAmount());
+            preStmt.setDate(4, account.getCreationDate());
 
             //execute the query
             preStmt.executeUpdate();
@@ -80,13 +81,14 @@ public class AccountDAO implements IAccountDAO {
     public boolean update(Account account) {
         try {
             PreparedStatement preStmt = connection.prepareStatement("UPDATE bank_account SET " +
-                    "account_type=?, amount=?,creationDate=?" +
+                    "client_id=?, account_type=?, amount=?,creation_date=?" +
                     "WHERE id = ?");
             //set the statement's parameters
-            preStmt.setString(1, account.getType().toString());
-            preStmt.setFloat(2, account.getAmount());
-            preStmt.setDate(3, account.getCreationDate());
-            preStmt.setInt(4, account.getId());
+            preStmt.setInt(1,account.getClientId());
+            preStmt.setString(2, account.getType().toString());
+            preStmt.setFloat(3, account.getAmount());
+            preStmt.setDate(4, account.getCreationDate());
+            preStmt.setInt(5, account.getId());
 
             int result = preStmt.executeUpdate();
             return true;
@@ -127,8 +129,9 @@ public class AccountDAO implements IAccountDAO {
                         accountType = AccountType.SPENDING;
                     }
                     float amount = result.getFloat("amount");
-                    Date creationDate = result.getDate("creationDate");
-                    Account account = new Account(accountType, amount, creationDate);
+                    Date creationDate = result.getDate("creation_date");
+                    int clientId = result.getInt("client_id");
+                    Account account = new Account(clientId, accountType, amount, creationDate);
                     account.setId(id);
 
                     accounts.add(account);

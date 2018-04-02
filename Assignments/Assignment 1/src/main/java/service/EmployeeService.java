@@ -45,6 +45,14 @@ public class EmployeeService extends GeneralService implements IEmployeeService 
     }
 
     @Override
+    public Client getClientInformationById(int id) throws InexistentClientException {
+        Client client = clientDao.getClientById(id);
+        if (client == null)
+            throw new InexistentClientException("Inexistent client");
+        return client;
+    }
+
+    @Override
     public Client addClientInformation(String employeeUsername, Client client) throws DuplicateClientException {
         Client c = clientDao.getClientByCNP(client.getCNP());
         if (c != null)
@@ -79,6 +87,15 @@ public class EmployeeService extends GeneralService implements IEmployeeService 
     public List<Account> getBankAccounts() {
         return accountDao.getAccounts();
     }
+
+    @Override
+    public Account getAccountById(int id) throws InexistentAccountException {
+        Account acc = accountDao.getAccountById(id);
+        if (acc == null)
+            throw new InexistentAccountException("Could not find account");
+        return acc;
+    }
+
 
     @Override
     public List<Account> getBankAccountsForClient(String cnp) throws InexistentClientException {

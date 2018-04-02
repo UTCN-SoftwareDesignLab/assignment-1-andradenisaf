@@ -7,10 +7,10 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/bank";
+    private static final String DB_URL = "jdbc:mysql://localhost:8889/bank_application?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
     private static final String USER = "root";
-    private static final String PASS = "adardna19";
+    private static final String PASS = "root";
     private static final int TIMEOUT = 5;
 
     private Connection connection;

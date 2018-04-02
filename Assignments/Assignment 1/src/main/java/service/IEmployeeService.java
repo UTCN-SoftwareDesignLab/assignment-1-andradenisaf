@@ -14,6 +14,8 @@ public interface IEmployeeService extends IGeneralService {
 
     public Client getClientInformation(String cnp) throws InexistentClientException;
 
+    public Client getClientInformationById(int id) throws InexistentClientException;
+
     public Client addClientInformation(String employeeUsername, Client client)
             throws DuplicateClientException;
 
@@ -31,8 +33,10 @@ public interface IEmployeeService extends IGeneralService {
 
     public Account updateAccount(String employeeUsername, Account account) throws InexistentAccountException;
 
+    public Account getAccountById(int id) throws InexistentAccountException;
+
     //MONEY TRANSFER
-    public boolean tranferMoneyBetweenBankAccounts(String employeeUsername, int fromAccountId, int toAccountId,
+    public boolean tranferMoneyBetweenBankAccounts(String employeeUsername, int senderAccountId, int receiverAccountId,
                                                    float amountOfMoney) throws InexistentAccountException, IllegalAmountException;
 
     //UTILITY BILLS

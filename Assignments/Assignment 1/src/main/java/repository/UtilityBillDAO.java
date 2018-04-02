@@ -99,13 +99,13 @@ public class UtilityBillDAO implements IUtilityBillDAO {
         try {
             PreparedStatement preStmt = connection.prepareStatement("UPDATE utility_bill SET " +
                     "bill_type=?, client_id=?,amount_to_pay=?,paid=?" +
-                    "WHERE id = ?");
+                    " WHERE id = ?");
             //set the statement's parameters
             preStmt.setString(1, utilityBill.getType().toString());
             preStmt.setInt(2, utilityBill.getClientId());
             preStmt.setFloat(3, utilityBill.getAmount());
             preStmt.setBoolean(4, utilityBill.isPaid());
-
+            preStmt.setInt(5,utilityBill.getId());
             int result = preStmt.executeUpdate();
             return true;
 
