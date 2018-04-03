@@ -54,8 +54,8 @@ public class UserDAO implements IUserDAO {
             preStmt.setString(1, user.getFullname());
             preStmt.setString(2, user.getUsername());
             preStmt.setString(3, user.getPassword());
-            preStmt.setString(4, user.getEmail());
-            preStmt.setString(5, user.getAddress());
+            preStmt.setString(4, user.getAddress());
+            preStmt.setString(5, user.getEmail());
             preStmt.setString(6, user.getRole().toString());
 
             //execute the query
@@ -84,13 +84,13 @@ public class UserDAO implements IUserDAO {
     public boolean update(User user) {
         try {
             PreparedStatement preStmt = connection.prepareStatement("UPDATE users SET " +
-                    "fullname=?, username=?,password=?,email=?,address=?,role=?" +
+                    "fullname=?, username=?,password=?,address=?,email=?,role=?" +
                     "WHERE id = ?");
             preStmt.setString(1, user.getFullname());
             preStmt.setString(2, user.getUsername());
             preStmt.setString(3, user.getPassword());
-            preStmt.setString(4, user.getEmail());
-            preStmt.setString(5, user.getAddress());
+            preStmt.setString(4, user.getAddress());
+            preStmt.setString(5, user.getEmail());
             preStmt.setString(6, user.getRole().toString());
             preStmt.setInt(7, user.getId());
 
@@ -138,7 +138,7 @@ public class UserDAO implements IUserDAO {
                     } else {
                         userRole = UserRole.EMPLOYEE;
                     }
-                    User user = new User(fullname, username, password, address, email, userRole);
+                    User user = new User(fullname, username, password, email, address, userRole);
                     user.setId(id);
 
                     users.add(user);

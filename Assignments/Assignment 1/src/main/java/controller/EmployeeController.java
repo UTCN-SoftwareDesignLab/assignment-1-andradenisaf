@@ -1,9 +1,6 @@
 package controller;
 
-import exceptions.DuplicateClientException;
-import exceptions.IllegalAmountException;
-import exceptions.InexistentAccountException;
-import exceptions.InexistentClientException;
+import exceptions.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,6 +17,7 @@ import service.IEmployeeService;
 
 import javax.rmi.CORBA.Util;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -67,8 +65,8 @@ public class EmployeeController extends AlertController {
     @FXML
     private TableColumn<Account, Date> creationDate;
 
-    @FXML
-    private TextField accountIdTextField;
+    //@FXML
+    //private TextField accountIdTextField;
 
     @FXML
     private TextField amountTextField;
@@ -126,6 +124,8 @@ public class EmployeeController extends AlertController {
 
     private Stage processBillStage;
 
+    private int accountIdVar;
+
     private ObservableList<String> accountTypesList = FXCollections.observableArrayList("SAVINGS", "SPENDING");
 
     public EmployeeController(String loggedInUsername, IEmployeeService employeeService) {
@@ -159,7 +159,7 @@ public class EmployeeController extends AlertController {
         amount = new TableColumn<>();
         creationDate = new TableColumn<>();
 
-        accountIdTextField = new TextField();
+        // accountIdTextField = new TextField();
         amountTextField = new TextField();
         clientIdTextField = new TextField();
         accountTypeChoiceBox = new ChoiceBox();
@@ -214,9 +214,24 @@ public class EmployeeController extends AlertController {
                     identityCardNoTextField.setText(Integer.toString(client.getIdentityCardNo()));
                     addressTextArea.setText(client.getAddress());
                     emailTextField.setText(client.getEmail());
+
+                    initAccountsForClient(client.getCNP());
+
                 }
             }
         });
+    }
+
+    @FXML
+    public void initAccountsForClient(String cnp) {
+
+        ObservableList<Account> currentClientsAccount;
+
+        try {
+            currentClientsAccount = FXCollections.observableArrayList(employeeService.getBankAccountsForClient(cnp));
+            bankAccountsTableView.setItems(currentClientsAccount);
+        } catch (InexistentClientException e) {
+        }
     }
 
     @FXML
@@ -232,16 +247,12 @@ public class EmployeeController extends AlertController {
         List<Account> accountsList = employeeService.getBankAccounts();
 
         bankAccountsTableView.getItems().setAll(accountsList);
-
-
         bankAccountsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
                 if (bankAccountsTableView.getSelectionModel().getSelectedItem() != null) {
                     Account account = bankAccountsTableView.getSelectionModel().getSelectedItem();
-                    System.out.println(account);
-
-                    accountIdTextField.setText(Integer.toString(account.getId()));
+                    accountIdVar = account.getId();
                     clientIdTextField.setText(Integer.toString(account.getClientId()));
                     amountTextField.setText(Float.toString(account.getAmount()));
                     accountTypeChoiceBox.setValue(account.getType());
@@ -359,7 +370,7 @@ public class EmployeeController extends AlertController {
             Client client = employeeService.getClientInformationById(clientId);
             Account acc = new Account(clientId, accountType, amount, creationDate);
             employeeService.addBankAccountForClient(loggedInUsername, client, acc);
-            initAccounts();
+            initAccountsForClient(client.getCNP());
         } catch (DuplicateClientException e) {
             displayErrorBox("Duplicate client", "Client already in database");
         } catch (InexistentClientException e) {
@@ -369,8 +380,14 @@ public class EmployeeController extends AlertController {
 
     public void updateAccount() {
 
-        int accountId = Integer.parseInt(accountIdTextField.getText());
         int clientId = Integer.parseInt(clientIdTextField.getText());
+        Client client = null;
+        try {
+            client = employeeService.getClientInformationById(clientId);
+        } catch (InexistentClientException e) {
+            return;
+        }
+
         String type = accountType.getText();
         AccountType accountType;
         if (type.equals("SAVINGS"))
@@ -385,12 +402,12 @@ public class EmployeeController extends AlertController {
             return;
 
         try {
-            Account acc = employeeService.getAccountById(accountId);
+            Account acc = employeeService.getAccountById(accountIdVar);
             acc.setClientId(clientId);
             acc.setType(accountType);
             acc.setAmount(amount);
             employeeService.updateAccount(loggedInUsername, acc);
-            initAccounts();
+            initAccountsForClient(client.getCNP());
 
         } catch (InexistentAccountException e) {
             displayErrorBox("Inexistent account", "Could not find account");
@@ -398,16 +415,20 @@ public class EmployeeController extends AlertController {
     }
 
     public void deleteAccount() {
-        int accountId = Integer.parseInt(accountIdTextField.getText());
-        if (accountId <= 0) {
-            displayErrorBox("Invalid id", "Invalid account id");
+
+        int clientId = Integer.parseInt(clientIdTextField.getText());
+
+        Client client = null;
+        try {
+            client = employeeService.getClientInformationById(clientId);
+        } catch (InexistentClientException e) {
             return;
         }
 
         try {
-            Account acc = employeeService.getAccountById(accountId);
+            Account acc = employeeService.getAccountById(accountIdVar);
             employeeService.deleteBankAccount(loggedInUsername, acc);
-            initAccounts();
+            initAccountsForClient(client.getCNP());
         } catch (InexistentAccountException e) {
             displayErrorBox("Inexistent account", "Could not find account");
         }
@@ -453,22 +474,21 @@ public class EmployeeController extends AlertController {
         }
     }
 
-    public void payBill()
-    {
+    public void payBill() {
         int accountId = Integer.parseInt(accountIdTextField2.getText());
         int utilityBillId = Integer.parseInt(utilityBillIdTextField.getText());
         String billType1 = billType.getText();
         UtilityBillType utilityBillType;
-        if(billType1.equals("PHONE_BILL"))
+        if (billType1.equals("PHONE_BILL"))
             utilityBillType = UtilityBillType.PHONE_BILL;
 
-        if(billType1.equals("INTERNET_BILL"))
+        if (billType1.equals("INTERNET_BILL"))
             utilityBillType = UtilityBillType.INTERNET_BILL;
 
-        if(billType1.equals("ELECTRICITY_BILL"))
+        if (billType1.equals("ELECTRICITY_BILL"))
             utilityBillType = UtilityBillType.ELECTRICITY_BILL;
 
-        if(billType1.equals("WATER_AND_SEWER_BILL"))
+        if (billType1.equals("WATER_AND_SEWER_BILL"))
             utilityBillType = UtilityBillType.WATER_AND_SEWER_BILL;
 
         int clinetId = Integer.parseInt(clientIdTextField2.getText());
@@ -478,8 +498,7 @@ public class EmployeeController extends AlertController {
         boolean paid = Boolean.parseBoolean(paidTextField.getText());
 
         UtilityBill ub = employeeService.getUtilityBill(utilityBillId);
-        if(ub == null)
-        {
+        if (ub == null) {
             displayErrorBox("Invalid bill", "Could not find bill");
             return;
         }
@@ -490,8 +509,10 @@ public class EmployeeController extends AlertController {
             processBillStage.close();
             initBills();
             initAccounts();
-        }
-        catch (Exception e)
+        } catch (BillAlreadyPaidException e) {
+            displayErrorBox("Already paid", "Bill was already paid!");
+
+        }catch(Exception e)
         {
             displayErrorBox("Error processing bill", "Something went wrong :(");
         }

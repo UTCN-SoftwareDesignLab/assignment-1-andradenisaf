@@ -50,7 +50,6 @@
             <Button fx:id="deleteAccountButton" layoutX="187.0" layoutY="602.0" mnemonicParsing="false" onAction="#deleteAccount" text="Delete" />
             <Button fx:id="transferMoneyButton" layoutX="743.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToTransferView" text="Transfer money" />
             <Button fx:id="processUtilityBillsButton" layoutX="879.0" layoutY="376.0" mnemonicParsing="false" onAction="#switchToProcessBillView" text="Process utitlity bills" />
-            <TextField fx:id="accountIdTextField" layoutX="69.0" layoutY="453.0" promptText="Account Id" />
          </children>
       </Pane>
    </children>

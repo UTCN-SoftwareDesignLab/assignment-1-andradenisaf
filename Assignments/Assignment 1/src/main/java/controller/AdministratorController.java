@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.ActivityLog;
 import model.User;
 import model.UserRole;
 import service.IAdministratorService;
@@ -129,6 +128,7 @@ public class AdministratorController extends AlertController {
                     passwordTextField.setText(employee.getPassword());
                     addressTextArea.setText(employee.getAddress());
                     emailTextField.setText(employee.getEmail());
+
                 }
             }
         });
