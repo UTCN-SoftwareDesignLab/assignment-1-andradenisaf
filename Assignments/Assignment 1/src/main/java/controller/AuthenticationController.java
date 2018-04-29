@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 import model.UserRole;
-import repository.UserDAO;
 import service.IAdministratorService;
 import service.IEmployeeService;
 import service.IGeneralService;
@@ -102,16 +101,13 @@ public class AuthenticationController extends AlertController {
             displayErrorBox("Invalid username", "Please enter a valid username");
         } catch (InvalidPasswordException e) {
             displayErrorBox("Invalid password", "Please enter a valid password");
-
         }
-
     }
 
     public void switchToSignUpView() {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/signUpView.fxml"));
-
 
             loader.setController(this);
             signUpStage.setTitle("Sign up");
@@ -175,7 +171,6 @@ public class AuthenticationController extends AlertController {
         } catch (UsernameAlreadyExistsException e) {
             displayErrorBox("Username already exists", "Please select a new username");
         }
-
     }
 
 

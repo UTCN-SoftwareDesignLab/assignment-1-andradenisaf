@@ -141,8 +141,6 @@ public class AdministratorController extends AlertController {
         initEmployees();
     }
 
-
-
     public void addEmployee() {
         String fullname = fullnameTextField.getText();
         String username = usernameTextField.getText();
@@ -158,7 +156,6 @@ public class AdministratorController extends AlertController {
             User user = new User(fullname, username, password, email, address, UserRole.EMPLOYEE);
             User savedUser = administratorService.addEmployee(user);
             initEmployees();
-            //System.out.print(savedUser);
         } catch (UsernameAlreadyExistsException e) {
             displayErrorBox("Username already exists", "Please select a new username");
         }

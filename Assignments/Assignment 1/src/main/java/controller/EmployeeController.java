@@ -203,21 +203,18 @@ public class EmployeeController extends AlertController {
 
         clientsTableView.getItems().setAll(clientsList);
 
-        clientsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-                if (clientsTableView.getSelectionModel().getSelectedItem() != null) {
-                    Client client = clientsTableView.getSelectionModel().getSelectedItem();
+        clientsTableView.getSelectionModel().selectedItemProperty().addListener((ChangeListener) (observableValue, oldValue, newValue) -> {
+            if (clientsTableView.getSelectionModel().getSelectedItem() != null) {
+                Client client = clientsTableView.getSelectionModel().getSelectedItem();
 
-                    fullnameTextField.setText(client.getFullname());
-                    cnpTextField.setText(client.getCNP());
-                    identityCardNoTextField.setText(Integer.toString(client.getIdentityCardNo()));
-                    addressTextArea.setText(client.getAddress());
-                    emailTextField.setText(client.getEmail());
+                fullnameTextField.setText(client.getFullname());
+                cnpTextField.setText(client.getCNP());
+                identityCardNoTextField.setText(Integer.toString(client.getIdentityCardNo()));
+                addressTextArea.setText(client.getAddress());
+                emailTextField.setText(client.getEmail());
 
-                    initAccountsForClient(client.getCNP());
+                initAccountsForClient(client.getCNP());
 
-                }
             }
         });
     }

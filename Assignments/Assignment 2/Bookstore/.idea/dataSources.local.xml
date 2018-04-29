@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="application.properties" uuid="e17d5dae-5d23-4301-a85e-415c47d0a757">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+    </data-source>
+    <data-source name="application.properties [2]" uuid="55508bed-c111-4e04-b33f-527173025244">
+      <database-info product="H2" version="1.4.196 (2017-06-10)" jdbc-version="4.0" driver-name="H2 JDBC Driver" driver-version="1.4.196 (2017-06-10)">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="jdbc:hsqldb:file:/Users/andradafarcas/Documents/UTCN/SEM2/SD/Projects/Assignment1/Assignments/Assignment 2/Bookstore/src/main/resources/application.property/" uuid="99e520f6-1a57-4c0a-801e-c6e641305058">
+      <database-info product="HSQL Database Engine" version="2.4.0" jdbc-version="4.2" driver-name="HSQL Database Engine Driver" driver-version="2.4.0">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <introspection-schemas>PUBLIC:PUBLIC</introspection-schemas>
+    </data-source>
+    <data-source name="jdbc:hsqldb:file:/Users/andradafarcas/Documents/UTCN/SEM2/SD/Projects/Assignment1/Assignments/Assignment 2/Bookstore/src/main/resources/application.properties/" uuid="eaf65a1d-b6ee-406c-bfce-ba7410b627d7">
+      <database-info product="HSQL Database Engine" version="2.4.0" jdbc-version="4.2" driver-name="HSQL Database Engine Driver" driver-version="2.4.0">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <introspection-schemas>PUBLIC:PUBLIC</introspection-schemas>
+    </data-source>
+    <data-source name="application.properties [3]" uuid="18ce4253-b383-4e31-ae2b-38245b782fa4">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+    </data-source>
+    <data-source name="application.properties [4]" uuid="342f1807-90a5-4fd2-995d-05eeb3812790">
+      <database-info product="SQLite" version="3.20.1" jdbc-version="2.1" driver-name="SQLite JDBC" driver-version="3.20.1.1" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <auth-required>false</auth-required>
+      <introspection-schemas>*:main</introspection-schemas>
+    </data-source>
+  </component>
+</project>

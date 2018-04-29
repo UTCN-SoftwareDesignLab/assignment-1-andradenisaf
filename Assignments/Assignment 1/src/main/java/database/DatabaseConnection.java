@@ -15,7 +15,7 @@ public class DatabaseConnection {
 
     private Connection connection;
 
-    private static DatabaseConnection dao = new DatabaseConnection();
+    private static DatabaseConnection databaseConnection = new DatabaseConnection();
 
     private DatabaseConnection() {
         setupConnection();
@@ -44,6 +44,6 @@ public class DatabaseConnection {
     }
 
     public static DatabaseConnection getInstance() {
-        return dao;
+        return databaseConnection;
     }
 }

@@ -2,7 +2,6 @@ package service;
 
 import exceptions.InexistentUserException;
 import repository.IUserDAO;
-import exceptions.InexistentAccountException;
 import exceptions.InvalidPasswordException;
 import exceptions.UsernameAlreadyExistsException;
 import model.User;
