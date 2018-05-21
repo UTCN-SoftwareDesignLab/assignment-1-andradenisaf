@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="application.properties" uuid="e17d5dae-5d23-4301-a85e-415c47d0a757">
+      <driver-ref>derby.embedded</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby:$PROJECT_DIR$/src/main/resources/application.properties</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="application.properties [2]" uuid="55508bed-c111-4e04-b33f-527173025244">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:$PROJECT_DIR$/src/main/resources/application.properties</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="jdbc:hsqldb:file:/Users/andradafarcas/Documents/UTCN/SEM2/SD/Projects/Assignment1/Assignments/Assignment 2/Bookstore/src/main/resources/application.property/" uuid="99e520f6-1a57-4c0a-801e-c6e641305058">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:$PROJECT_DIR$/src/main/resources/application.property/</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="jdbc:hsqldb:file:/Users/andradafarcas/Documents/UTCN/SEM2/SD/Projects/Assignment1/Assignments/Assignment 2/Bookstore/src/main/resources/application.properties/" uuid="eaf65a1d-b6ee-406c-bfce-ba7410b627d7">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:$PROJECT_DIR$/src/main/resources/application.properties/</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="application.properties [3]" uuid="18ce4253-b383-4e31-ae2b-38245b782fa4">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:$PROJECT_DIR$/src/main/resources/application.properties</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="application.properties [4]" uuid="342f1807-90a5-4fd2-995d-05eeb3812790">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/src/main/resources/application.properties</jdbc-url>
+      <driver-properties>
+        <property name="enable_load_extension" value="true" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

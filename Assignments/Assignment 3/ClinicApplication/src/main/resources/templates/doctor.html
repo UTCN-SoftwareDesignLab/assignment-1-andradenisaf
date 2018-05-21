@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+
+    ﻿<style>
+    input[type=text], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 20%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    form {
+        color: #ffffff;
+    }
+</style>
+</head>
+<body onload="loadData()">
+
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100 ver6 m-b-110">
+                <table data-vertable="ver6">
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1" data-column="column1">ID</th>
+                        <th class="column100 column2" data-column="column2">Description</th>
+                        <th class="column100 column3" data-column="column3">Date</th>
+                        <th class="column100 column4" data-column="column4">Patient</th>
+                        <th class="column100 column5" data-column="column5">Doctor</th>
+                    </tr>
+                    </thead>
+                    <tbody class="consultations">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p style="font-size: 20px; font-family: Montserrat;">EDIT CONSULTATION<br></p><br>
+<div style="border-radius: 5px; padding: 20px;
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    font-family: Montserrat;" id="edit_consultation">
+    <form>
+        Consultation ID:
+        <input type="text" name="consultation_id" value="" id="consultation_id">
+        <br>
+        Description:
+        <input type="text" name="description" value="" id="description">
+        <br>
+        <br>
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="js/main.js"></script>
+
+<script>
+    function loadData() {
+        loadConsultations()
+    }
+
+
+
+    function loadConsultations() {
+        $.ajax({
+            type: "GET",
+            headers: {
+                "Accept": "application/json"
+            },
+            url: "/consultations",
+            success: function (data) {
+                renderConsultations(data);
+            }
+        })
+    }
+
+    $("#edit_consultation").submit(function (e) {
+        var consultation_id = $("#consultation_id").val()
+        var description = $("#description").val()
+
+        $.ajax({
+            type: "PUT",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            url: "/consultations/" + consultation_id,
+            data: JSON.stringify({
+                "description": description
+            }),
+            success: function () {
+                alert("Consultation updated successfully.")
+                loadConsultations()
+            },
+            error: function (error) {
+                alert("Failed to update consultation.")
+            }
+        })
+
+        return false;
+    })
+
+    function renderConsultations(data) {
+        var html = "";
+        var consultations = data.consultations;
+        var count = consultations.length;
+
+        for (var i = 0; i < count; i++) {
+            var consultation = consultations[i];
+            var table_row = '<tr class="row100 body">' +
+                '<tr class="row100 body">' +
+                '<td class="column100 column1" data-column="column1">' + consultation.id + '</td>' +
+                '<td class="column100 column2" data-column="column1">' + consultation.description + '</td>' +
+                '<td class="column100 column3" data-column="column2">' + consultation.date + '</td>' +
+                '<td class="column100 column4" data-column="column3">' + consultation.patient.name + '</td>' +
+                '<td class="column100 column5" data-column="column4">' + consultation.doctor.fullname + '</td>' +
+                '</tr>';
+            html += table_row;
+        }
+
+        $(".consultations").html(html)
+    }
+
+</script>
+
+
+</body>
+</html>

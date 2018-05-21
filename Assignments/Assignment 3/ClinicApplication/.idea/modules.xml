@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ClinicApplication.iml" filepath="$PROJECT_DIR$/.idea/modules/ClinicApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ClinicApplication_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ClinicApplication_main.iml" group="ClinicApplication" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ClinicApplication_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ClinicApplication_test.iml" group="ClinicApplication" />
+    </modules>
+  </component>
+</project>
