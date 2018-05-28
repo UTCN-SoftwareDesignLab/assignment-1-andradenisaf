@@ -149,7 +149,7 @@ public class UserController {
         return new ResponseEntity(user.toJSON().toJSONString(), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "users/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/users/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteUser(@PathVariable("id") Long id) {
         User user = userService.findById(id);
         if (user == null) {

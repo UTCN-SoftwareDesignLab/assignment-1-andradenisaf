@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 @Entity
 @Table(name = "consultations")

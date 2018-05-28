@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -26,12 +28,14 @@ public class ConsultationController {
     private IConsultationService consultationService;
     private IUserService userService;
     private IPatientService patientService;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    public ConsultationController(IConsultationService consultationService, IUserService userService, IPatientService patientService) {
+    public ConsultationController(IConsultationService consultationService, IUserService userService, IPatientService patientService, SimpMessagingTemplate messagingTemplate) {
         this.consultationService = consultationService;
         this.userService = userService;
         this.patientService = patientService;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @RequestMapping(path = "/consultations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -162,7 +166,7 @@ public class ConsultationController {
         return new ResponseEntity(consultation.toJSON().toJSONString(), HttpStatus.OK);
     }
 
-    @RequestMapping(path = "consultations/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/consultations/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity deleteConsultation(@PathVariable("id") Long id) {
         Consultation consultation = consultationService.findById(id);
         if (consultation == null) {
@@ -175,4 +179,34 @@ public class ConsultationController {
             return new ResponseEntity(HttpStatus.OK);
         }
     }
+
+    @RequestMapping(path = "/notify/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity notifyDoctor(@PathVariable("id") Long doctorId, @RequestBody String jsonString) {
+        User doctor = userService.findById(doctorId);
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject;
+        try {
+            jsonObject = (JSONObject) jsonParser.parse(jsonString);
+        } catch (ParseException e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        Long patientId = (Long) jsonObject.get("patient");
+        Patient patient = patientService.findById(patientId);
+        if (patient == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        String dateString = (String) jsonObject.get("date");
+
+        String message = "You have an appointment with " + patient.getName() + " - " + dateString + ".";
+        System.out.println("To user: " + doctor.getUsername());
+        messagingTemplate.convertAndSendToUser(doctor.getUsername(), "/notification", message);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }
